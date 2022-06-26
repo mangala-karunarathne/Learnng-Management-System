@@ -23,8 +23,9 @@ connection.once("open", () => {
     console.log("Mongodb connection success!!");
 })
 
-const router = require('./routes/students.js');
-app.use('/students',router);// to settle the rotes error
+const router = require('./routes/Students.js');
+app.use('/student',router);
+
 
 app.listen(PORT, () => {
     console.log(`Server is up and running on port ${PORT}`)
