@@ -16,7 +16,7 @@ function Header() {
                     <a className="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
                             <li className="nav-item">
-                    <a className="nav-link disabled">Creatre Student</a>
+                    <a className="nav-link" href="/add">Create Student</a>
                     </li>
                 </ul>
                
