@@ -5,20 +5,40 @@ export default function AllStudent() {
 const [students, setStudents] = useState([]);
 
 useEffect(() => {
-    function getStudents() {
         axios.get("http://localhost:5000/student/").then((res) => {
             setStudents(res.data);
+            console.log('y',students);
         }).catch((err) => {
             alert(err.message);
         })
-    }
-
-   
     },[])
+
     return (
         <div>
-            <h1>All Students</h1>
-            console.log(students)
+            <div className="topic">
+                <h1>All Students</h1>
+            </div>
+
+            <table id="student-tb">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {students.map(item => {
+                    return (
+                        <tr key={item._id}>
+                            <td>{ item.name }</td>
+                            <td>{ item.age }</td>
+                            <td>{ item.gender }</td>
+                        </tr>
+                    );
+                    })}
+                </tbody>
+            </table>
         </div>
     )
 }

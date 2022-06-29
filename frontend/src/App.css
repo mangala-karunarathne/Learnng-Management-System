@@ -36,3 +36,72 @@
     transform: rotate(360deg);
   }
 }
+
+.topic h1 {
+  text-align: center;
+  margin: 2%;
+  text-transform: uppercase;
+}
+
+/*-----form styles-----*/
+.container form {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3%;
+  width: 60%;
+}
+
+.from-group {
+  margin-bottom: 10px;
+}
+
+/*-----students table-----*/
+#student-tb {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3%;
+}
+
+#student-tb td, #student-tb th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#student-tb tr:nth-child(even){background-color: #f2f2f2;}
+
+#student-tb tr:hover {background-color: #ddd;}
+
+#student-tb th {
+  padding: 12px;
+  text-align: center;
+  background-color:#0d6efd;
+  color: white;
+}
+
+#student-tb td {
+  padding: 10px;
+  text-align: center;
+}
+
+/*-----button styles-----*/
+.btn {
+  background-color: #0d6efd;
+  color: white;
+}
+
+/*-----home page-----*/
+.home-title p{
+  text-align: center;
+  text-transform: uppercase;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #0d6efd;
+  font-size: 50px;
+  font-weight: bold;
+}
