@@ -7,13 +7,14 @@ const [students, setStudents] = useState([]);
 useEffect(() => {
         axios.get("http://localhost:5000/student/").then((res) => {
             setStudents(res.data);
-            console.log('y',students);
+            console.log(students);
         }).catch((err) => {
             alert(err.message);
         })
     },[])
 
     return (
+    
         <div>
             <div className="topic">
                 <h1>All Students</h1>

@@ -1,25 +1,47 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
+
 
 function AddStudent(){
 
-    const[name,setName] = useState("");
-    const[age,setAge] = useState("");
-    const[gender,setGender] = useState("");
+    const[name,setName] = useState('');
+    const[age,setAge] = useState('');  
+    const [gender, setGender] = useState('');
+    const [value, setValue] = useState("default");
 
-    function sentData(e){
-        e.preventDefault();
+
+    const handleGender = (e) => {
+      setValue(e.target.value);
+      setGender(e.target.value);
+      console.log(value);
+    }
+
+    const clearFields = () => {
+            setName('');
+            setAge('');
+            setGender('');
+            console.log("clearFields")
+    }
+
+    const createStudent =(e) =>{
+       // e.preventDefault(); PreventDefault avoids the getting default value after submitting
         const newStudent = { name, age, gender }
 
        axios.post("http://localhost:5000/student/add",newStudent).then(()=>{
             alert("Student Added Successfully");
-            setName("");
-            setAge("");
-            setGender("");
+          
+            clearFields();
+
+            // setName('');
+            // setAge('');
+            // setGender('');
        }).catch((err)=>{
            alert(err);
        })
+
     }
+
+   
 
     return(
         <div>
@@ -28,7 +50,7 @@ function AddStudent(){
             </div>
 
             <div className="container">
-                <form onSubmit={sentData}> 
+                <form > 
                     <div class="from-group">
                         <label for="name" class="col-sm-2 col-form-label">Student Name</label>
                             <div>
@@ -53,22 +75,43 @@ function AddStudent(){
                     
                     <div class="from-group">
                         <label for="gender" class="col-sm-2 col-form-label">Gender</label>
-                            <div>
+                            {/* <div>
                                 <input type="text" class="form-control" id="gender" placeholder="Enter Student Gender"
                                     onChange={(e)=>{
                                         setGender(e.target.value);
                                     }}
                                 />
-                            </div>                    
+                            </div>                     */}
+                            <div>
+
+                            
+                                <select defaultValue={value} onChange={handleGender}>
+                                     <option value="default" disabled hidden>  
+                                        {/* Adding Place Hoder */}
+                                        Select Your Gender
+                                     </option>
+                                     <option value="Male">Male</option>
+                                     <option value="Female">Female</option>
+                                </select>
+                
+
+                            </div>
+
+
                     </div>
+
+                    {/* <div>
+                        <MaleFemale/>
+                    </div> */}
                     
                     <div>
-                        <button type="submit" className="btn">SUBMIT</button>
+                        <button type="submit" className="btn" onClick={(e) => createStudent(e)}>SUBMIT</button>
                     </div>
                 </form>
             </div> 
         </div>      
     )
+
 }
 
 export default AddStudent;

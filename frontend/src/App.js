@@ -1,8 +1,6 @@
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom"
 
 import './App.css';
-import CounterClass from './components/CounterClass';
-import CounterFunction from './components/CounterFunction';
 import Header from './components/Header';
 import AddStudent from './components/Addstudent';//Location of AddStudent function
 import AllStudent from './components/AllStudents';
