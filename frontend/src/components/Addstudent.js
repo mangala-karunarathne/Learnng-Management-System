@@ -85,7 +85,7 @@ function AddStudent(){
                             <div>
 
                             
-                                <select defaultValue={value} onChange={handleGender}>
+                                <select class="form-control" defaultValue={value} onChange={handleGender}>
                                      <option value="default" disabled hidden>  
                                         {/* Adding Place Hoder */}
                                         Select Your Gender
