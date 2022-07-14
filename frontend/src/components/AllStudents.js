@@ -6,6 +6,7 @@ export default function AllStudent() {
 
 const [students, setStudents] = useState([]);
 
+
 /* To get all student details when render */
 useEffect(() => {
         axios.get("http://localhost:5000/student/").then((res) => {
@@ -17,6 +18,25 @@ useEffect(() => {
             alert(err.message);
         })
     },[])
+
+    /* To delete a student */
+    const deleteStudent = (id) =>{
+        axios.delete(`http://localhost:5000/student//delete/${id}`).then((res) => {
+            alert('Student Deleted Successfully');
+        }).catch((err) => {
+            alert(err.message);
+        })
+        
+        //load db data after delete a student
+        setTimeout(()=>{
+            axios.get("http://localhost:5000/student/").then((res) => {
+            setStudents(res.data);
+            }).catch((err) => {
+            alert(err.message);
+            })
+            },500)
+
+    }
 
     return (
     
@@ -39,10 +59,10 @@ useEffect(() => {
                                     <td>{std.age}</td>
                                     <td>{std.gender}</td>
                                     <td className="edit-dlt">
-                                        <button className="btn"> Edit </button>
+                                        <button className="btn" > Edit </button>
                                         &nbsp;&nbsp;
                                         {/* To make the space between buttons */}
-                                        <button className="btn"> Delete </button>
+                                        <button className="btn" onClick={() => deleteStudent(std._id)}> Delete </button>
                                     </td>
                                </tr>;
                                     })
