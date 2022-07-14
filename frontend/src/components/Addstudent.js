@@ -65,7 +65,7 @@ function AddStudent(){
                     <div class="from-group">
                         <label for="age" class="col-sm-2 col-form-label">Student Age</label>
                             <div>
-                                <input type="text" readonly class="form-control" id="age" placeholder="Enter Student Age"
+                                <input type="numeric" readonly class="form-control" id="age" placeholder="Enter Student Age"
                                     onChange={(e)=>{
                                         setAge(e.target.value);
                                     }}
