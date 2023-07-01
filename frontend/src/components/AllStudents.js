@@ -50,40 +50,49 @@ export default function AllStudent() {
   };
 
   const activeEditMode = (selectedId) => {
-    setMode(EDIT_MODE);
-    setId(selectedId);
+    axios
+      .get(`http://localhost:5000/student/get/${selectedId}`)
+      .then((res) => {
+        const { name, age, gender } = res.data.student;
+        // Update the state with the selected student data
+        setId(selectedId);
+        setName(name);
+        setAge(age);
+        setGender(gender);
+
+        // Switch to the edit mode
+        setMode(EDIT_MODE);
+      })
+      .catch((err) => {
+        console.log("Error", err.message);
+      });
   };
 
   const editStudent = (stdntid) => {
-
-    if (!name || !age || !gender) {
-      alert("All inputs are required");
-      return;
-    }
-
     const newStudent = { name, age, gender };
 
     axios
       .put(`http://localhost:5000/student/update/${stdntid}`, newStudent)
       .then((res) => {
-        if (res.data.status === "success") {
-          alert("Student Updated Successfully");
-          setName("");
-          setAge("");
-          setGender("");
-        } else if (res.data.status === "error") {
-          alert(res.data.message);
-        } else if (res.data.status === "error1") {
-          alert(res.data.message);
-        } else if (res.data.status === "error2") {
-          alert(res.data.message);
+        const { status, message } = res.data;
+        if (status === "success") {
+          alert(message); // Display the success message from the backend
         }
         setMode(VIEW_MODE);
       })
       .catch((err) => {
-        // alert("Error with updating data");
-        // alert(err);
-        console.log(err);
+        if (err.response) {
+          // The request was made and the server responded with a status code
+          // Extract the error message from the response data
+          const errorMessage = err.response.data.message;
+          alert(errorMessage);
+        } else if (err.request) {
+          // The request was made but no response was received
+          console.log(err.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Error", err.message);
+        }
       });
 
     //load db data after delete a student
@@ -124,7 +133,6 @@ export default function AllStudent() {
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        placeholder={std.name}
                       />
                     </td>
                     <td>
@@ -133,7 +141,6 @@ export default function AllStudent() {
                         type="numeric"
                         value={age}
                         onChange={(e) => setAge(e.target.value)}
-                        placeholder={std.age}
                       />
                     </td>
                     <td>
@@ -142,7 +149,6 @@ export default function AllStudent() {
                         type="text"
                         value={gender}
                         onChange={(e) => setGender(e.target.value)}
-                        placeholder={std.gender}
                       />
                     </td>
                   </>
@@ -161,7 +167,7 @@ export default function AllStudent() {
                       onClick={() => editStudent(std._id)}
                     >
                       {" "}
-                      Save{" "}
+                      Update{" "}
                     </button>
                   ) : (
                     <>
