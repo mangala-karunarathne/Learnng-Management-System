@@ -42,27 +42,30 @@ router.route("/").get((req, res) => {
 });
 
 router.route("/update/:id").put(async (req, res) => {
-  // Update in CRUD
-  let userId = req.params.id;
-  const { name, age, gender } = req.body; // Destructure
-
-  const updateStudent = {
-    name,
-    age,
-    gender,
-  };
-
-  const update = await Student.findByIdAndUpdate(userId, updateStudent)
-    /* same thing can be done using following code,
-    const update = await Student.findByIdAndUpdate(userId, {name,age,gender})*/
-    .then(() => {
-      res.status(200).send({ status: "User updated" });
-    })
-    .catch((err) => {
+    // Update in CRUD
+    let userId = req.params.id;
+    const { name, age, gender } = req.body; // Destructure
+  
+    try {
+      const student = await Student2.findById(userId);
+  
+      if (!student) {
+        return res.status(404).send({ status: "User not found" });
+      }
+  
+      student.name = name;
+      student.age = age;
+      student.gender = gender;
+  
+      await student.save();
+  
+      res.status(200).send({ student, status: "User updated" });
+      console.log("updatedStudent:", student);
+    } catch (err) {
       console.log(err);
       res.status(500).send({ status: "Error with updating Data" });
-    });
-}); // back end userId fetch
+    }
+  });
 
 router.route("/delete/:id").delete(async (req, res) => {
   // Delete in CRUD
