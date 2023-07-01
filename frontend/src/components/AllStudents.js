@@ -28,7 +28,7 @@ export default function AllStudent() {
   /* To delete a student */
   const deleteStudent = (id) => {
     axios
-      .delete(`http://localhost:5000/student//delete/${id}`)
+      .delete(`http://localhost:5000/student/delete/${id}`)
       .then((res) => {
         alert("Student Deleted Successfully");
       })
@@ -55,22 +55,36 @@ export default function AllStudent() {
   };
 
   const editStudent = (stdntid) => {
+
+    if (!name || !age || !gender) {
+      alert("All inputs are required");
+      return;
+    }
+
     const newStudent = { name, age, gender };
 
     axios
       .put(`http://localhost:5000/student/update/${stdntid}`, newStudent)
       .then((res) => {
-        console.log(res.data);
-        alert("Student Updated Successfully");
-        setName("");
-        setAge("");
-        setGender("");
+        if (res.data.status === "success") {
+          alert("Student Updated Successfully");
+          setName("");
+          setAge("");
+          setGender("");
+        } else if (res.data.status === "error") {
+          alert(res.data.message);
+        } else if (res.data.status === "error1") {
+          alert(res.data.message);
+        } else if (res.data.status === "error2") {
+          alert(res.data.message);
+        }
+        setMode(VIEW_MODE);
       })
       .catch((err) => {
-        alert(err);
+        // alert("Error with updating data");
+        // alert(err);
+        console.log(err);
       });
-
-    setMode(VIEW_MODE);
 
     //load db data after delete a student
     setTimeout(() => {
