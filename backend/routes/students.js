@@ -42,23 +42,36 @@ router.route("/").get((req, res) => {
 });
 
 router.route("/update/:id").put(async (req, res) => {
-  // Update in CRUD
-  let userId = req.params.id;
-  const { name, age, gender } = req.body; // Destructure
-
-  if (!name || !age || !gender) {
-    return res
-      .status(400)
-      .json({ status: "error", message: "All inputs are required" });
-  }
-
   try {
+    // Update in CRUD
+    let userId = req.params.id;
+    const { name, age, gender } = req.body; // Destructure
+
+    // Input validation
+    if (!name || !age || !gender) {
+      return res
+        .status(400)
+        .json({ status: "error", message: "All inputs are required !!" });
+    }
+
+    // Additional validation
+    if (isNaN(age)) {
+      return res
+        .status(400)
+        .json({ status: "error", message: "Invalid Age data !!" });
+    }
+
+    if (!["male", "female", "Male", "Female"].includes(gender)) {
+      return res
+        .status(400)
+        .json({ status: "error", message: "Invalid Gender data !!" });
+    }
     const student = await Student.findById(userId);
 
     if (!student) {
       return res
         .status(404)
-        .json({ status: "error1", message: "User not found" });
+        .json({ status: "error1", message: "User not found !!" });
     }
 
     student.name = name;
@@ -69,7 +82,7 @@ router.route("/update/:id").put(async (req, res) => {
 
     res
       .status(200)
-      .json({ status: "success", message: "User updated", student });
+      .json({ status: "success", message: "User updated Successfilly !!", student });
     console.log("updatedStudent:", student);
   } catch (err) {
     console.log(err);
@@ -84,7 +97,7 @@ router.route("/delete/:id").delete(async (req, res) => {
   let userId = req.params.id;
   await Student.findByIdAndDelete(userId)
     .then(() => {
-      res.status(200).send({ status: "User deleted" });
+      res.status(200).send({ status: "User deleted !!" });
     })
     .catch((err) => {
       console.log(err.message);
