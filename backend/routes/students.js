@@ -61,11 +61,13 @@ router.route("/update/:id").put(async (req, res) => {
         .json({ status: "error", message: "Invalid Age data !!" });
     }
 
-    if (!["male", "female", "Male", "Female"].includes(gender)) {
-      return res
-        .status(400)
-        .json({ status: "error", message: "Invalid Gender data !!" });
-    }
+    // Backend valdation for Gender When we use Gender as text field in frontend
+    // if (!["male", "female", "Male", "Female"].includes(gender)) {
+    //   return res
+    //     .status(400)
+    //     .json({ status: "error", message: "Invalid Gender data !!" });
+    // }
+
     const student = await Student.findById(userId);
 
     if (!student) {

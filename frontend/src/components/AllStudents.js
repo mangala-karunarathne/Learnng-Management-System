@@ -133,7 +133,7 @@ export default function AllStudent() {
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                      />
+                      />{" "}
                     </td>
                     <td>
                       {" "}
@@ -141,15 +141,24 @@ export default function AllStudent() {
                         type="numeric"
                         value={age}
                         onChange={(e) => setAge(e.target.value)}
-                      />
+                      />{" "}
                     </td>
                     <td>
                       {" "}
-                      <input
+                      <select
+                        class="form-control"
+                        defaultValue={gender}
+                        onChange={(e) => setGender(e.target.value)}
+                      >
+                        <option value="default" disabled hidden/>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                      </select>
+                      {/* <input
                         type="text"
                         value={gender}
                         onChange={(e) => setGender(e.target.value)}
-                      />
+                      />{" "} */}
                     </td>
                   </>
                 ) : (
